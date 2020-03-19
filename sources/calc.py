@@ -8,7 +8,8 @@ in quotes (i.e. as a string).
 
 # If 'value' is not an integer, convert it to a float and failing that, a string.
 
-from front.input import input1, input2
+from front.input import input_num
+input1, input2 = input_num()
 
 def conv(value):
     try:
