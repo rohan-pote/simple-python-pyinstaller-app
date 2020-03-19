@@ -7,6 +7,9 @@ in quotes (i.e. as a string).
 '''
 
 # If 'value' is not an integer, convert it to a float and failing that, a string.
+
+from front.input import input1, input2
+
 def conv(value):
     try:
         return int(value)
@@ -17,10 +20,10 @@ def conv(value):
             return str(value)
 
 # The 'add2' function itself
-def add2(arg1, arg2):
+def add2(input1, input2):
     # Convert 'arg1' and 'arg2' to their appropriate types
-    arg1conv = conv(arg1)
-    arg2conv = conv(arg2)
+    arg1conv = conv(input1)
+    arg2conv = conv(input2)
     # If either 'arg1' or 'arg2' is a string, ensure they're both strings.
     if isinstance(arg1conv, str) or isinstance(arg2conv, str):
         arg1conv = str(arg1conv)
