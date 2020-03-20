@@ -11,8 +11,8 @@ pipeline {
                 }
             }
             steps {
-                sh 'python -m py_compile sources/add2vals.py sources/calc.py'
-                stash(name: 'compiled-results', includes: 'sources/*.py*')
+                sh 'python -m py_compile sources2/add2vals.py sources2/calc.py'
+                stash(name: 'compiled-results', includes: 'sources2/*.py*')
             }
         }
         stage('Test') {
@@ -22,13 +22,19 @@ pipeline {
                 }
             }
             steps {
-                sh 'py.test --junit-xml test-reports/results.xml sources/test_calc.py'
+                sh 'py.test --junit-xml test-reports/results.xml sources2/test_calc.py'
             }
             post {
                 always {
                     junit 'test-reports/results.xml'
                 }
             }
+        }
+        stage('Clone another repository') {
+          steps {
+            git branch: 'master',
+            url: 'https://github.com/rohan-pote/simple-python-pyinstaller-app2.git'
+          }
         }
         stage('Integration Test') {
             agent {
@@ -49,7 +55,7 @@ pipeline {
         stage('Deliver') {
             agent any
             environment {
-                VOLUME = '$(pwd)/sources:/src'
+                VOLUME = '$(pwd)/sources2:/src'
                 IMAGE = 'cdrx/pyinstaller-linux:python2'
             }
             steps {
