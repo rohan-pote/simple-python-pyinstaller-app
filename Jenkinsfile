@@ -32,7 +32,7 @@ pipeline {
         }
         stage('Checking out first') {
           steps {
-            dir('sources2') {
+            dir('sources') {
                 git(url: 'https://github.com/rohan-pote/simple-python-pyinstaller-app2.git', branch: 'master')
             }
           }
