@@ -30,11 +30,19 @@ pipeline {
                 }
             }
         }
-        stage('Clone another repository') {
-          steps {
-            git branch: 'master',
-            url: 'https://github.com/rohan-pote/simple-python-pyinstaller-app2.git'
-          }
+        node{
+            stage('checkout'){
+                checkout([$class: 'GitSCM',
+                branches: [[name: '*/master']],
+                doGenerateSubmoduleConfigurations: false,
+                extensions: [
+                    [$class: 'SparseCheckoutPaths',  sparseCheckoutPaths:[[$class:'SparseCheckoutPath', path:'sources/']]]
+                        ],
+                submoduleCfg: [],
+                userRemoteConfigs: [[credentialsId: 'rohan-pote@github.com',
+                url: 'https://github.com/rohan-pote/simple-python-pyinstaller-app.git']]]
+                )
+            }
         }
         stage('Integration Test') {
             agent {
