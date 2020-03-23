@@ -31,12 +31,10 @@ pipeline {
             }
         }
         stage('Checking out first') {
-          node {
-              steps {
+          steps {
                 dir('sources') {
                     git(url: 'https://github.com/rohan-pote/simple-python-pyinstaller-app2.git', branch: 'master')
                 }
-              }
           }
         }
         stage('Integration Test') {
