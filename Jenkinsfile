@@ -59,30 +59,32 @@ pipeline {
             }
         }
         stage('Integration Test') {
-            agent {
-                docker {
-                    image 'qnib/pytest'
-                }
-            }
-            stage('Test Repo 1') {
-                steps {
-                    sh 'mkdir -p sources'
-                    dir("sources")
-                    {
-                        git branch: "master",
-                        url: 'https://github.com/rohan-pote/simple-python-pyinstaller-app2.git'
-                        sh 'py.test --junit-xml test-reports/results.xml sources/test_calc.py'
+            parallel {
+                agent {
+                    docker {
+                        image 'qnib/pytest'
                     }
                 }
-            }
-            stage('Test repo 2') {
-                steps {
-                   sh 'py.test --junit-xml test-reports/results.xml sources2/test_calc.py'
+                stage('Test Repo 1') {
+                    steps {
+                        sh 'mkdir -p sources'
+                        dir("sources")
+                        {
+                            git branch: "master",
+                            url: 'https://github.com/rohan-pote/simple-python-pyinstaller-app2.git'
+                            sh 'py.test --junit-xml test-reports/results.xml sources/test_calc.py'
+                        }
+                    }
                 }
-            }
-            post {
-                always {
-                    junit 'test-reports/results.xml'
+                stage('Test repo 2') {
+                    steps {
+                       sh 'py.test --junit-xml test-reports/results.xml sources2/test_calc.py'
+                    }
+                }
+                post {
+                    always {
+                        junit 'test-reports/results.xml'
+                    }
                 }
             }
         }
