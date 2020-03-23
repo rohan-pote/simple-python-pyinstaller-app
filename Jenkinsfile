@@ -40,7 +40,22 @@ pipeline {
                 dir('sources') {
                     git(url: 'https://github.com/rohan-pote/simple-python-pyinstaller-app2.git', branch: 'master')
                 }
-          }
+            }
+        }
+        stage('Checkout Repo') {
+            agent {
+                docker {
+                    image 'qnib/pytest'
+                }
+            }
+            steps {
+                sh 'mkdir -p Module1'
+                dir("sources")
+                {
+                    git branch: "master",
+                    url: 'https://github.com/rohan-pote/simple-python-pyinstaller-app2.git'
+                }
+            }
         }
         stage('Integration Test') {
             agent {
