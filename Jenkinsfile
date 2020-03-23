@@ -31,7 +31,12 @@ pipeline {
             }
         }
         stage('Checking out first') {
-          steps {
+            agent {
+                docker {
+                    image 'qnib/pytest'
+                }
+            }
+            steps {
                 dir('sources') {
                     git(url: 'https://github.com/rohan-pote/simple-python-pyinstaller-app2.git', branch: 'master')
                 }
