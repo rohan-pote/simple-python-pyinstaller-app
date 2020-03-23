@@ -60,12 +60,12 @@ pipeline {
         }
         stage('Integration Test') {
             parallel {
-                agent {
-                    docker {
-                        image 'qnib/pytest'
-                    }
-                }
                 stage('Test Repo 1') {
+                    agent {
+                       docker {
+                           image 'qnib/pytest'
+                        }
+                    }
                     steps {
                         sh 'mkdir -p sources'
                         dir("sources")
@@ -77,6 +77,11 @@ pipeline {
                     }
                 }
                 stage('Test repo 2') {
+                    agent {
+                       docker {
+                           image 'qnib/pytest'
+                        }
+                    }
                     steps {
                        sh 'py.test --junit-xml test-reports/results.xml sources2/test_calc.py'
                     }
