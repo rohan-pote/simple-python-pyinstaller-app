@@ -77,7 +77,8 @@ pipeline {
                     }
                     post {
                         always {
-                        junit 'test-reports/results.xml'
+                            junit 'test-reports/results.xml'
+                        }
                     }
                 }
                 stage('Test repo 2') {
@@ -91,7 +92,8 @@ pipeline {
                     }
                     post {
                         always {
-                        junit 'test-reports/results.xml'
+                            junit 'test-reports/results.xml'
+                        }
                     }
                 }
             }
