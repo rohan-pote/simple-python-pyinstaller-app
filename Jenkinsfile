@@ -59,43 +59,12 @@ pipeline {
             }
         }
         stage('Integration Test') {
-            parallel {
-                stage('Test Repo 1') {
-                    agent {
-                       docker {
-                           image 'qnib/pytest'
-                        }
-                    }
-                    steps {
-                        sh 'mkdir -p sources'
-                        dir("sources")
-                        {
-                            git branch: "master",
-                            url: 'https://github.com/rohan-pote/simple-python-pyinstaller-app2.git'
-                            sh 'py.test --junit-xml test-reports/results.xml sources/test_calc.py'
-                        }
-                    }
-                    post {
-                        always {
-                            junit 'test-reports/results.xml'
-                        }
-                    }
-                }
-                stage('Test repo 2') {
-                    agent {
-                       docker {
-                           image 'qnib/pytest'
-                        }
-                    }
-                    steps {
-                       sh 'py.test --junit-xml test-reports/results.xml sources2/test_calc.py'
-                    }
-                    post {
-                        always {
-                            junit 'test-reports/results.xml'
-                        }
-                    }
-                }
+            steps {
+                build(
+                    job: "e2e-test/${JOB_BASE_NAME}",
+                    wait: true,
+                    propagate: true
+                )
             }
         }
         stage('Deliver') {
