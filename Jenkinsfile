@@ -44,6 +44,7 @@ pipeline {
                     export PORT_WEB_UI=8080
                     export DATA_DIR=/tmp/localstack/data
                     export DEBUG=1
+                    export AWS_DEFAULT_REGION=us-east-1
                     env
                     cat /tmp/localstack_infra.log
                     cat /tmp/localstack_infra.err
