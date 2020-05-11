@@ -39,8 +39,8 @@ pipeline {
             steps {
                 sh '''
                     export SERVICES=s3
-                    export AWS_ACCESS_KEY_ID=temp12345
-                    export AWS_SECRET_ACCESS_KEY=temp12345
+                    export AWS_ACCESS_KEY_ID=temp123456
+                    export AWS_SECRET_ACCESS_KEY=temp123456
                     export PORT_WEB_UI=8080
                     export DATA_DIR=/tmp/localstack/data
                     export DEBUG=1
