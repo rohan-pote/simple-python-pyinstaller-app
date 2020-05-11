@@ -32,11 +32,7 @@ pipeline {
         }
         stage('Integration Test') {
             steps {
-                build(
-                    job: "Integration Test",
-                    wait: true,
-                    propagate: true
-                )
+
             }
         }
         stage('Deliver') {
