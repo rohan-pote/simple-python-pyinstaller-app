@@ -43,8 +43,7 @@ pipeline {
                     export AWS_SECRET_ACCESS_KEY=temp12345
                     env
                     aws --version
-                    aws '--endpoint-url=http://localhost:4572' s3 mb s3://mytestbucket
-                    aws '--endpoint-url=http://localhost:4572' s3 ls
+                    aws --debug '--endpoint-url=http://localhost:4572' s3 mb s3://mytestbucket
                 '''
             }
         }
