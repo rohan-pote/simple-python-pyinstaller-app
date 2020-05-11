@@ -42,6 +42,8 @@ pipeline {
                     export AWS_ACCESS_KEY_ID=temp12345
                     export AWS_SECRET_ACCESS_KEY=temp12345
                     env
+                    cat /tmp/localstack_infra.log
+                    cat /tmp/localstack_infra.err
                     aws --version
                     aws --debug '--endpoint-url=http://localhost:4572' s3 mb s3://mytestbucket
                 '''
