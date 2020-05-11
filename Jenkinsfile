@@ -41,6 +41,10 @@ pipeline {
                     export SERVICES=s3
                     export AWS_ACCESS_KEY_ID=temp12345
                     export AWS_SECRET_ACCESS_KEY=temp12345
+                    export PORT_WEB_UI=8080
+                    export DATA_DIR=/tmp/localstack/data
+                    export DEBUG=1
+                    EXPOSE 4572
                     env
                     cat /tmp/localstack_infra.log
                     cat /tmp/localstack_infra.err
