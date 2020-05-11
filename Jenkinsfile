@@ -44,7 +44,7 @@ pipeline {
                     export PORT_WEB_UI=8080
                     export DATA_DIR=/tmp/localstack/data
                     export DEBUG=1
-                    EXPOSE 4572
+                    sh EXPOSE 4572
                     env
                     cat /tmp/localstack_infra.log
                     cat /tmp/localstack_infra.err
