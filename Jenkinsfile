@@ -49,7 +49,7 @@ pipeline {
                     cat /tmp/localstack_infra.err
                     aws --version
                     pip install --no-cache localstack
-                    aws --debug '--endpoint-url=http://localhost:4572' s3 mb s3://mytestbucket
+                    aws --debug '--endpoint-url=http://localhost:4566' s3 mb s3://mytestbucket
                 '''
             }
         }
