@@ -31,8 +31,13 @@ pipeline {
             }
         }
         stage('Integration Test') {
+            agent {
+                docker {
+                    image 'localstack/localstack:0.10.5'
+                }
+            }
             steps {
-
+                sh 'aws --version'
             }
         }
         stage('Deliver') {
