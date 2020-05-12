@@ -15,30 +15,30 @@ pipeline {
                 stash(name: 'compiled-results', includes: 'sources2/*.py*')
             }
         }
-        stage('Test') {
-            agent {
-                docker {
-                    image 'qnib/pytest'
-                }
-            }
-            steps {
-                sh 'py.test --junit-xml test-reports/results.xml sources2/test_calc.py'
-            }
-            post {
-                always {
-                    junit 'test-reports/results.xml'
-                }
-            }
-        }
+//         stage('Test') {
+//             agent {
+//                 docker {
+//                     image 'qnib/pytest'
+//                 }
+//             }
+//             steps {
+//                 sh 'py.test --junit-xml test-reports/results.xml sources2/test_calc.py'
+//             }
+//             post {
+//                 always {
+//                     junit 'test-reports/results.xml'
+//                 }
+//             }
+//         }
         stage('Integration Test') {
             agent {
                 docker {
-                    image 'docker-develop.anaplan-np.net/docker-base-images/build-python:0.0.16'
+                    image 'python:2-alpine'
                 }
             }
             steps {
                 sh '''
-                    pip install --no-cache localstack --user
+                    pip install localstack
                     pip install awscli
                     export SERVICES=s3
                     export AWS_ACCESS_KEY_ID=temp123456
