@@ -33,11 +33,13 @@ pipeline {
         stage('Integration Test') {
             agent {
                 docker {
-                    image 'localstack/localstack:latest'
+                    image 'docker-develop.anaplan-np.net/docker-base-images/build-python:0.0.16'
                 }
             }
             steps {
                 sh '''
+                    pip install --no-cache localstack
+                    pip install awscli
                     export SERVICES=s3
                     export AWS_ACCESS_KEY_ID=temp123456
                     export AWS_SECRET_ACCESS_KEY=temp123456
@@ -46,11 +48,11 @@ pipeline {
                     export DEBUG=1
                     export AWS_DEFAULT_REGION=us-east-1
                     env
-                    cat /tmp/localstack_infra.log
-                    cat /tmp/localstack_infra.err
                     aws --version
-                    pip install --no-cache localstack
-                    aws s3 mb s3://mytestbucket
+                    localstack start
+                    aws configure set default.s3.addressing_style path
+                    aws --debug --endpoint-url=http://localhost:4566 s3api create-bucket --bucket testbucket --region us-west-1
+                    aws --debug --endpoint-url=http://localhost:4566 s3 ls
                 '''
             }
         }
