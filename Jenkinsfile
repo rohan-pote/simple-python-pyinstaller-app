@@ -15,31 +15,30 @@ pipeline {
                 stash(name: 'compiled-results', includes: 'sources2/*.py*')
             }
         }
-//         stage('Test') {
-//             agent {
-//                 docker {
-//                     image 'qnib/pytest'
-//                 }
-//             }
-//             steps {
-//                 sh 'py.test --junit-xml test-reports/results.xml sources2/test_calc.py'
-//             }
-//             post {
-//                 always {
-//                     junit 'test-reports/results.xml'
-//                 }
-//             }
-//         }
+        stage('Test') {
+            agent {
+                docker {
+                    image 'qnib/pytest'
+                }
+            }
+            steps {
+                sh 'py.test --junit-xml test-reports/results.xml sources2/test_calc.py'
+            }
+            post {
+                always {
+                    junit 'test-reports/results.xml'
+                }
+            }
+        }
         stage('Integration Test') {
             agent {
                 docker {
-                    image 'python:2-alpine'
+                    image 'localstack/localstack:latest'
                 }
             }
             steps {
                 sh '''
-                    pip install localstack --user
-                    pip install awscli
+                    /opt/code/localstack cat Makefile
                     export SERVICES=s3
                     export AWS_ACCESS_KEY_ID=temp123456
                     export AWS_SECRET_ACCESS_KEY=temp123456
@@ -48,11 +47,11 @@ pipeline {
                     export DEBUG=1
                     export AWS_DEFAULT_REGION=us-east-1
                     env
+                    cat /tmp/localstack_infra.log
+                    cat /tmp/localstack_infra.err
                     aws --version
-                    localstack start
-                    aws configure set default.s3.addressing_style path
-                    aws --debug --endpoint-url=http://localhost:4566 s3api create-bucket --bucket testbucket --region us-west-1
-                    aws --debug --endpoint-url=http://localhost:4566 s3 ls
+                    pip install --no-cache localstack
+                    aws s3 mb s3://mytestbucket
                 '''
             }
         }
