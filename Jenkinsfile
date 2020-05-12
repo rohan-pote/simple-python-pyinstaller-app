@@ -39,9 +39,10 @@ pipeline {
             steps {
                 sh '''
                     whoami
-                    export JENKINS_USER=root
+                    export USER=root
                     whoami
-                    /opt/code/localstack cat Makefile | grep install:
+                    /opt/code/localstack ls
+                    /opt/code/localstack sudo cat Makefile | grep install:
                     export SERVICES=s3
                     export AWS_ACCESS_KEY_ID=temp123456
                     export AWS_SECRET_ACCESS_KEY=temp123456
