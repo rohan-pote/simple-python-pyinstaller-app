@@ -4,17 +4,17 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
-        stage('Build') {
-            agent {
-                docker {
-                    image 'python:2-alpine'
-                }
-            }
-            steps {
-                sh 'python -m py_compile sources2/add2vals.py sources2/calc.py'
-                stash(name: 'compiled-results', includes: 'sources2/*.py*')
-            }
-        }
+//         stage('Build') {
+//             agent {
+//                 docker {
+//                     image 'python:2-alpine'
+//                 }
+//             }
+//             steps {
+//                 sh 'python -m py_compile sources2/add2vals.py sources2/calc.py'
+//                 stash(name: 'compiled-results', includes: 'sources2/*.py*')
+//             }
+//         }
 //         stage('Test') {
 //             agent {
 //                 docker {
@@ -38,6 +38,8 @@ pipeline {
             }
             steps {
                 sh '''
+                    whoami
+                    export JENKINS_USER=root
                     whoami
                     /opt/code/localstack cat Makefile | grep install:
                     export SERVICES=s3
