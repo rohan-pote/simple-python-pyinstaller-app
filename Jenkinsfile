@@ -38,6 +38,7 @@ pipeline {
             }
             steps {
                 sh '''
+                    whoami
                     /opt/code/localstack cat Makefile | grep install:
                     export SERVICES=s3
                     export AWS_ACCESS_KEY_ID=temp123456
