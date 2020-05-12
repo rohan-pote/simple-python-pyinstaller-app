@@ -38,7 +38,7 @@ pipeline {
             }
             steps {
                 sh '''
-                    cat Makefile
+                    cat Makefile | grep install:
                     export SERVICES=s3
                     export AWS_ACCESS_KEY_ID=temp123456
                     export AWS_SECRET_ACCESS_KEY=temp123456
