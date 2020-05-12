@@ -38,7 +38,7 @@ pipeline {
             }
             steps {
                 sh '''
-                    pip install --no-cache localstack
+                    pip install --user --no-cache localstack
                     pip install awscli
                     export SERVICES=s3
                     export AWS_ACCESS_KEY_ID=temp123456
